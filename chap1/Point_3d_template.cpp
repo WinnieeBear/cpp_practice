@@ -64,13 +64,12 @@ private:
     type _coords[dim];
 };
 
-inline
 template <class type, int dim>
-ostream& operator<<(ostream& os, const Point<type, dim>& pt) {
+inline ostream& operator<<(ostream& os, const Point<type, dim>& pt) {
     os << "(";
     for (int i = 0; i < dim - 1; ++i) {
         os << pt[i]  << ", ";
     }
     os << pt[dim - 1];
-    so << " )";
+    os << " )";
 }
