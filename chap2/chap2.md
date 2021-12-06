@@ -1,3 +1,7 @@
+# FAQ
+is it ok to return the local std::vector object?
+https://stackoverflow.com/questions/22655059/why-is-it-ok-to-return-a-vector-from-a-function/22655120
+
 # 1. default constructor
 ## 1.1 含有member class object 的类会被编译器合成 
 ## 1.2. 带有defalut constructor的base class
