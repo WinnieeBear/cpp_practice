@@ -14,7 +14,7 @@ https://stackoverflow.com/questions/22655059/why-is-it-ok-to-return-a-vector-fro
 任何class如果没有default construtor就会被合称一个 (只有上述四种情况)
 编译器合成出来的default constructor会显示设定class内每一个data member的初始值(只合成只有成员对象，基类，其他所有的non-static data member 不会被合成)
 # 2. copy constructor
-显示的调用，参数传递，返回值返回都会调用copy constructor
+显式的调用，参数传递，返回值返回都会调用copy constructor
 ## 2.1 default memberwise initialization
 copy data member, 对于 member class object 则是递归调用copy constructor
 

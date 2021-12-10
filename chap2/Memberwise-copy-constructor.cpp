@@ -1,7 +1,8 @@
 class String {
 public:
     // non-explict copy constructor
-private:
+    String(const char*);
+// private:
     char* str;
     int len;
 };

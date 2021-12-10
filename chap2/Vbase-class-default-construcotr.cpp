@@ -19,8 +19,8 @@ public:
 };
 
 
-// 无法在编译器决定出 pa->X::i 的位置
-void foo(const A* pa)
+// 无法在编译期间决定出 pa->X::i 的位置
+void foo(A* pa)
 {
     pa->i = 1024;
 }
@@ -32,7 +32,7 @@ int main()
 }
 
 // 通过在virtual base class中来安插一个指针来确定具体位置，下面是具体实现策略
-void foo(const A* pa)
+void foo(A* pa)
 {
     // __vbcX 表示编译器所产生的指针，指向 virtual base class X
     pa->__vbcX->i = 1024;

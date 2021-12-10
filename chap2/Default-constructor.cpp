@@ -1,4 +1,4 @@
-// 如果一个class没有任何constructor，但它内含有member object，后者由default constructor，
+// 如果一个class没有任何constructor，但它内含有member object，后者有default constructor，
 // 那么这个class的implict default constructor就是non-trival的，编译器要为该class合成一个
 // defualt constructor
 
