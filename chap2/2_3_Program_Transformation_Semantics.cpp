@@ -151,4 +151,47 @@ public:
 
 private:
     float _x, _y, _z;
+<<<<<<< HEAD
 };
+=======
+};
+
+/*
+ * obviously, you do not need an explict copy construct, since there is
+ * not any member class object contain the copy constructor or virtual base class object
+ * or virtual funtion.
+ * But how we deal with the NRV? since the NRV needs the explicit copy constructor
+ * like the Point3d has many return value object opertator+, opertor-, operator*;
+ */
+
+// we implement an explict copy construtor
+Point3d::Point3d(const Point3d& rhs)
+{
+    _x = rhs._x;
+    _y = rhs._y;
+    _z = rhs._z;
+    // we can use the memcpy more efficently
+    // memcpy(this, &rhs, sizeof(Point3d));
+}
+
+// but if the class contain the virtual functions or vitraul base class then you can't use the
+// memcpy
+class Shape {
+public:
+    Shape()
+    {
+        memset(this, 0, sizeof(Shape));
+    }
+    virtual ~Shape();
+};
+
+// the compiler will transform the code like below
+Shape::Shape()
+{
+    // vptr must be set bofore the user code
+    __vptr__Shape = __vtbl__Shape;
+
+    // *bug*, this will clear the vptr
+    memset(this, 0, sizeof(Shape));
+}
+>>>>>>> fuck lj
