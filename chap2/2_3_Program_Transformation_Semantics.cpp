@@ -151,9 +151,6 @@ public:
 
 private:
     float _x, _y, _z;
-<<<<<<< HEAD
-};
-=======
 };
 
 /*
@@ -194,4 +191,3 @@ Shape::Shape()
     // *bug*, this will clear the vptr
     memset(this, 0, sizeof(Shape));
 }
->>>>>>> fuck lj
