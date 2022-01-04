@@ -128,7 +128,7 @@ public:
     Point2d(float x = 0.0, float y = 0.0) : _x(x), _y(y)
     {
     }
-    Point2d& operator+=(const Point2d& rhs)
+    virtual Point2d& operator+=(const Point2d& rhs)
     {
         _x += rhs._x;
         _y += rhs._y;
@@ -145,3 +145,127 @@ public:
 protected:
     float _x, _y;
 };
+
+class Point3d : public Point2d {
+public:
+    Point3d(float x = 0.0, float y = 0.0, float z = 0.0) : Point2d(x, y), _z(z)
+    {
+    }
+    virtual float z()
+    {
+        return _z;
+    }
+    void z(float newz)
+    {
+        _z = newz;
+    }
+    virtual Point3d& operator+=(/*const*/ Point2d& rhs)
+    {
+        Point2d::operator+=(rhs);
+        // blow is not right, since the parameter is const, but z() is not const
+        // so either remove const parameter or add const for z()
+        // _z += rhs.z();
+        _z += rhs.z();
+    }
+
+protected:
+    float _z;
+};
+
+/*
+ * multiple inheritance
+ */
+
+class Point2d {
+public:
+    // ... has virtual function
+protected:
+    float _x, _y;
+};
+
+class Point3d : public Point2d {
+public:
+protected:
+    float _z;
+};
+
+class Vertex {
+public:
+    // ... has virtual function
+protected:
+    Vertex* next;
+};
+
+class Vertex3d : public Point3d, public Vertex {
+public:
+    // ...
+protected:
+    float mumble;
+};
+
+// memory layout please refer md
+Vertex3d v3d;
+Vertex* pv;
+Point2d* p2d;
+Point3d* p3d;
+
+pv = &v3d;
+// will be converted to
+pv = (Vertex*)((char*)&v3d + sizeof(Point3d));
+// below will directly copy the address
+p2d = &v3d;
+p3d = &v3d;
+
+Vertex3d* pv3d;
+Vertex* pv;
+pv = pv3d;
+// will be conveted to below(need judge the pointer)
+pv = pv3d ? (Vertex*)((char*)pv3d + sizeof(Point3d)) : 0;
+
+/*
+ * vitrual inheritance
+ */
+
+class Point2d {
+public:
+    // ...
+protected:
+    float _x, _y;
+};
+
+class Vertex : public virtual Point2d {
+public:
+    // ...
+protected:
+    Vertex* next;
+};
+
+class Point3d : public virtual Point2d {
+public:
+    // ...
+protected:
+    float _z;
+};
+
+class Vertex3d : public Vertex, public Point3d {
+public:
+    // ...
+protected:
+    float mumble;
+};
+// please refer to the .md to check layout of memory
+
+/*
+ * pointers to data member
+ */
+class Point3d {
+public:
+    virtual ~Point3d();
+
+protected:
+    static Point3d origin;
+    float x, y, z;
+};
+
+// what's the meaning of below?
+&Point3d::z;
